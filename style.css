@@ -8,3 +8,43 @@ body {
     background: #F0F2F5;
     font-family: 'Poppins', sans-serif;
 }
+
+header {
+    background: #2D4A22;
+    padding: 2rem 0 10rem;
+    text-align: center;
+}
+
+.container {
+    width: min(90vw, 800px);
+    margin: auto;
+}
+
+h2 {
+    margin-top: 3.2rem;
+    margin-bottom: 0.8rem;
+    color: #363F5F;
+    font-weight: normal;
+}
+
+#logo {
+    color: #FFF;
+    font-weight: 100;
+}
+
+#balance {
+    margin-top: -8rem;
+}
+
+#balance h2 {
+    color: #FFF;
+    margin-top: 0;
+}
+
+.card {
+    background: #FFF;
+}
+
+footer {
+    text-align: center;
+} 
