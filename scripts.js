@@ -36,18 +36,31 @@ const transactions = [
     },
 ]
 
+// Functions responsible for the calculation (Funções responsaveis pelo calculo)
 const Transaction = {
     //Add entries (Somar as entradas)
     incomes() {
-
+        let income = 0;
+        transactions.forEach(transaction => {
+            if(transaction.amount > 0) {
+                income += transaction.amount;
+            }
+        })
+        return income;
     },
     //Add the exits (Somas as saídas)
     expenses() {
-
+        let expense = 0;
+        transactions.forEach(transaction => {
+            if(transaction.amount < 0) {
+                expense += transaction.amount;
+            }
+        })
+        return expense;
     },
     //Sum of inputs minus sum of outputs (Valor total)
     total() {
-
+        return Transaction.incomes() + Transaction.expenses();
     }
 }
 
@@ -79,13 +92,13 @@ const DOM = {
     updateBalance() {
         document
             .getElementById('incomeDisplay')
-            .innerHTML = "Soma das entradas";
+            .innerHTML = Transaction.incomes();
         document
             .getElementById('expenseDisplay')
-            .innerHTML = "Soma das saidas";
+            .innerHTML =  Transaction.expenses();
         document
             .getElementById('totalDisplay')
-            .innerHTML = "Total"
+            .innerHTML =  Transaction.total();
     }
 }
 
