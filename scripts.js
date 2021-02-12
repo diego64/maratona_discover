@@ -38,10 +38,16 @@ const transactions = [
 
 // Functions responsible for the calculation (Funções responsaveis pelo calculo)
 const Transaction = {
+    all: transactions,
+    add(transaction) { 
+        Transaction.all.push(transaction)
+
+        console.log(Transaction.all)
+    },
     //Add entries (Somar as entradas)
     incomes() {
         let income = 0;
-        transactions.forEach(transaction => {
+        Transaction.all.forEach(transaction => {
             if(transaction.amount > 0) {
                 income += transaction.amount;
             }
@@ -51,7 +57,7 @@ const Transaction = {
     //Add the exits (Somas as saídas)
     expenses() {
         let expense = 0;
-        transactions.forEach(transaction => {
+        Transaction.all.forEach(transaction => {
             if(transaction.amount < 0) {
                 expense += transaction.amount;
             }
@@ -92,13 +98,13 @@ const DOM = {
     updateBalance() {
         document
             .getElementById('incomeDisplay')
-            .innerHTML = Transaction.incomes();
+            .innerHTML = Utils.formatCurrency(Transaction.incomes());
         document
             .getElementById('expenseDisplay')
-            .innerHTML =  Transaction.expenses();
+            .innerHTML =  Utils.formatCurrency(Transaction.expenses());
         document
             .getElementById('totalDisplay')
-            .innerHTML =  Transaction.total();
+            .innerHTML =  Utils.formatCurrency(Transaction.total());
     }
 }
 
@@ -124,3 +130,10 @@ transactions.forEach(function(transaction) {
 })
 
 DOM.updateBalance();
+
+Transaction.add({
+    id: 40,
+    description: 'Teste',
+    amount: 100,
+    date: '12/02/2021'
+});
