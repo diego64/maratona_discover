@@ -17,19 +17,17 @@ const Modal = {
 
 const transactions = [
     {
-        id: 1,
         description: 'Luz',
         amount: -50000,
         date: '07/02/2021'
     },
     {
-        id: 2,
         description: 'Website',
         amount: 500000,
         date: '07/02/2021'
     },
     {
-        id: 3,
+
         description: 'Internet',
         amount: -20000,
         date: '07/02/2021'
@@ -39,11 +37,22 @@ const transactions = [
 // Functions responsible for the calculation (Funções responsaveis pelo calculo)
 const Transaction = {
     all: transactions,
+
+    //Adding a transaction (Adcionando uma nova transação)
     add(transaction) { 
         Transaction.all.push(transaction)
 
-        console.log(Transaction.all)
+        App.reload();
     },
+
+    //Removing a transaction (Removendo uma nova transação)
+    remove(index) {
+        Transaction.all.splice(index, 1);
+
+        App.reload();
+    },
+
+
     //Add entries (Somar as entradas)
     incomes() {
         let income = 0;
@@ -105,6 +114,9 @@ const DOM = {
         document
             .getElementById('totalDisplay')
             .innerHTML =  Utils.formatCurrency(Transaction.total());
+    },
+    clearTransaction() {
+        DOM.transactionsContainer.innerHTML = ""
     }
 }
 
@@ -125,15 +137,18 @@ const Utils = {
     }
 }
 
-transactions.forEach(function(transaction) {
-    DOM.addTransaction(transaction)
-})
+const App = {
+    init() {
+        Transaction.all.forEach(transaction => {
+            DOM.addTransaction(transaction)
+        })
+        
+        DOM.updateBalance();
+    },
+    reload() {
+        DOM.clearTransaction();
+        App.init();
+    }
+}
 
-DOM.updateBalance();
-
-Transaction.add({
-    id: 40,
-    description: 'Teste',
-    amount: 100,
-    date: '12/02/2021'
-});
+Transaction.remove(0)
