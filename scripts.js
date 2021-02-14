@@ -17,7 +17,7 @@ const Modal = {
 
 const transactions = [
     {
-        description: 'Luz',
+        date: 'Luz',
         amount: -50000,
         date: '07/02/2021'
     },
@@ -120,7 +120,21 @@ const DOM = {
     }
 }
 
-const Utils = { 
+const Utils = {
+    //Handling the case that the user put a period in place of a comma (Tratando o caso que o usuário colocar ponto no lugar de vígula)
+    formatAmount(value) {
+        value= Number(value) * 100;
+        
+        return value;
+    },
+
+    //Date formatting yy/dd/mm to mm/dd/yy (Formatação da data yy/dd/mm para mm/dd/yy)
+    formatDate(date) {
+    const splittedDate = date.split("-");
+d
+    return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`
+    },
+    //Configuration and formatting of data for Brazilian currency (Configuração e formatação dos dados para a moeda do Brasil)
     formatCurrency(value) {
         const signal = Number(value) < 0 ? "-" : "";
         
@@ -134,6 +148,60 @@ const Utils = {
         }) 
          
         return signal + value;
+    }
+}
+
+const Form = {
+    description: document.querySelector('input#description'),
+    amount: document.querySelector('input#amount'),
+    date: document.querySelector('input#date'),
+
+    //Fetching data in HTML (Buscando os dados no HTML)
+    getValues() {
+        return {
+            description: Form.description.value,
+            amount: Form.amount.value,
+            date: Form.date.value
+        }
+    },
+    //Validating the data (Validando os dados )
+    validateFields() {
+        const { description, amount, date } = Form.getValues();
+
+        if(
+            description.trim() === "" ||
+            amount.trim() === "" ||
+            date.trim() === "") {
+                throw new Error("Por favor, preencha todos os campos")
+        }
+    },
+    //Data formatting (Formatação dos dados)
+    formatValues() { 
+        let { description, amount, date } = Form.getValues(); 
+
+        amount = Utils.formatAmount(amount);
+
+        date = Utils.formatDate(date);
+
+        console.log(date)
+    },
+
+    submit(event) {
+        event.preventDefault();
+
+
+        try {
+        //Verification of filled fields (Verificação dos campos preencidos)
+        //Form.validateFields();
+
+        //Format the data to save (Formatar os dados para salvar)
+        Form.formatValues();
+
+        } catch (error) {
+            alert(error.message)
+        }
+
+
     }
 }
 
@@ -151,4 +219,4 @@ const App = {
     }
 }
 
-Transaction.remove(0)
+App.init();
