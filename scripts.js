@@ -119,9 +119,11 @@ const DOM = {
 const Utils = {
      //Handling the case that the user put a period in place of a comma (Tratando o caso que o usuário colocar ponto no lugar de vígula)
     formatAmount(value){
-        value = Number(value.replace(/\,\./g, "")) * 100 //value = Number(value.replace(/\,\./g, "")) * 100;
-        
-        return value
+        //value = Number(value.replace(/\,\./g, "")) * 100 //value = Number(value.replace(/\,\./g, "")) * 100;
+        //return value
+
+        value = value * 100;
+        return Math.round(value);
     },
 
     //Date formatting yy/dd/mm to mm/dd/yy (Formatação da data yy/dd/mm para mm/dd/yy)
